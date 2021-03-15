@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class OreBlob extends AnimatedEntity {
-    private PathingStrategy strategy = new SingleStepPathingStrategy();
+    private PathingStrategy strategy = new AStarPathingStrategy();
     public OreBlob(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod) {
         super(id, position, images, actionPeriod, animationPeriod);
     }
