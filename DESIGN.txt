@@ -1,0 +1,73 @@
+Methods Left in Functions: 
+
+parseBackground()
+parseMiner()
+parseSmith()
+parseVein()
+parseOre()
+parseObstacle()
+
+- I left the parse methods in the Functions class because they don't really access any data applying to specific Objects.
+The functions each took in a list of strings, a WorldModel, and an imageStore, but their variables were never accessed.
+The only times that these objects were used was as a parameter to another method call (the create functions). 
+I also left them in the Functions class because they accessed most of the constants that were still in the Functions class. 
+
+nearestEntity()
+
+- I left the nearestEntity() function in the Functions class because it also doesn't really access data particular to any specific Object. 
+I think that this could have possibly gone in the Entity class, because it takes in a list of entities. 
+I chose to leave it in functions because it never calls direcltly on Entity data. 
+
+load()
+
+- I left the load() function in the Functions class because it doesn't access or change any data relating to a specific Object. 
+The Objects that it takes in are just used again within the function as parameters to other function calls. 
+The only place that the load() function is called is from the VirtualWorld class, which is another place that this method could work in. 
+
+getCurrentImage()
+
+- I left the getCurrentImage() in the Functions class because the parameter it takes in is casted within the function. 
+getCurrentImage() takes in an Object, which is casted as either a Background or an Entity. 
+At first I looked into moving this function into the Entity class, but that only caused more problems with the Background class.
+Since this methods input is more braud (encompassing both Background and Entity), I chose to leave it in the Functions class. 
+
+processLine()
+
+- I left the processLine() function in the Functions class because it is not called anywhere else. 
+The only functions that call it are the create functions, which I also left in the Functions class. 
+
+clamp()
+
+- I left the clamp() function in Functions class because it doesn't access any data related to an object.
+The other option for this function would be to put it as a Private method within the WorldView class, the only class where it is called. 
+
+createVein()
+createQuake()
+createOreBlob()
+createOre()
+createObstacle()
+createMinerNotFull()
+createMinerFull()
+createBlacksmith()
+createActivityAction()
+createAnimationAction()
+
+- I decided to leave all of the create function in the Functions class because all each of them does is return a new Action 
+depending on the entity type. I didn't think it would make sense to put it in a class such as Action becauuse Action.createAction 
+wouldn't make sense. You would have to create an action in order to call the method to create another one. I also left them 
+because they are called by the parse functions which I also left in the Functions class. Another reason that I left the create 
+methods is that they don't directly access data from any object, they only create a new Action Object from the parameters passed in. 
+
+
+Ambiguous Methods: 
+
+processImageLine()
+getImages()
+setAlpha()
+loadImages()
+
+- Most of these methods could have gone in the Functions class, but I chose to put them in the ImageStore class because they were not
+called anywhere else in the program. I originally put the loadImages() function in the ImageStore class because it directly accesses 
+the date in the images Map. I realized after that the LoadImages() function was the only function that called these other functions, 
+and these functions also call eachother. Since the functions were not called anywhere else, I chose to make them private 
+and leave them in the ImageStore class. 
