@@ -5,14 +5,14 @@ import java.util.List;
 public abstract class AnimatedEntity extends ActiveEntity {
     private int animationPeriod;
     private int imageIndex;
-
+    private PathingStrategy ps= new AStarPathingStrategy();
     public AnimatedEntity(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod) {
         super(id, position, images, actionPeriod);
         this.animationPeriod = animationPeriod;
         this.imageIndex = 0;
     }
 
-
+    protected PathingStrategy getPathingStrategy(){return ps;}
     protected int getAnimationPeriod() {
         return this.animationPeriod;
     }

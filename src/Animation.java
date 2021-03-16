@@ -5,6 +5,7 @@ public class Animation implements Action
     private ImageStore imageStore;
     private int repeatCount;
     //git testing
+    //another
     public Animation(
             AnimatedEntity entity,
             WorldModel world,
