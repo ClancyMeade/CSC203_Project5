@@ -67,7 +67,8 @@ public abstract class Miner extends AnimatedEntity {
         return this.resourceCount;
     }
 
-    protected void incrementResourceCount() {
+    protected void incrementResourceCount()
+    {
         this.resourceCount += 1;
     }
 

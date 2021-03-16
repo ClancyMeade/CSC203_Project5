@@ -68,4 +68,16 @@ public final class CreateFactory
             String id, Point position, int actionPeriod, List<PImage> images) {
         return new Vein(id, position, images, actionPeriod);
     }
+
+    public static Dragon createDragon(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod, int lifeCount)
+    {
+        return new Dragon(id, position, images, actionPeriod, animationPeriod, lifeCount);
+    }
+
+    public static Fence createFence(String id, Point position, List<PImage> images)
+    {
+        return new Fence(id, position, images);
+    }
+
+
 }
