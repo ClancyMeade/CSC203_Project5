@@ -32,6 +32,9 @@ public final class VirtualWorld extends PApplet {
     private static final double FASTER_SCALE = 0.25;
     private static final double FASTEST_SCALE = 0.10;
 
+    private static final int FENCE_ACTION_TIME = 5;
+    private static final int FENCE_ANIMATION_TIME = 6;
+
     private static double timeScale = 1.0;
 
     private ImageStore imageStore;
@@ -74,7 +77,38 @@ public final class VirtualWorld extends PApplet {
         }
         view.drawViewport();
     }
+    public void mousePressed()
+    {
+        Point pressed = mouseToPoint(mouseX, mouseY);
+        //add fence object at points 10 by 10 around this
+        int topRightX = pressed.getX() + 5;
+        int topRightY = pressed.getY() - 5;
+        for(int i = 0; i < 10; i++){
+            Point p1 = new Point(topRightX - i, topRightY);
+            Point p2 = new Point(topRightX - i, topRightY + 10);
+            Point p3 = new Point(topRightX, topRightY + i);
+            Point p4 = new Point(topRightX - 10, topRightY + i);
+            // a fence must be added to each of these points
+            //create fence and add to world but idk what class to do that in
+            Fence fence = CreateFactory.createFence("fence1", p1, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
+            this.world.tryAddEntity(fence);
+            fence = CreateFactory.createFence("fence2", p2, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
+            this.world.tryAddEntity(fence);
+            fence = CreateFactory.createFence("fence2", p3, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
+            this.world.tryAddEntity(fence);
+            fence = CreateFactory.createFence("fence2", p4, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
+            this.world.tryAddEntity(fence);
 
+
+        }
+        redraw();
+
+    }
+
+    private Point mouseToPoint(int x, int y)
+    {
+        return new Point(mouseX/TILE_WIDTH, mouseY/TILE_HEIGHT);
+    }
     public void keyPressed() {
         if (key == CODED) {
             int dx = 0;
