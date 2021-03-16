@@ -33,8 +33,7 @@ public class OreBlob extends AnimatedEntity {
         scheduler.scheduleEvent(this, CreateFactory.createActivityAction(this, world, imageStore), nextPeriod);
     }
 
-    public boolean moveToOreBlob(
-            WorldModel world,
+    public boolean moveToOreBlob(WorldModel world,
             Entity target,
             EventScheduler scheduler) {
         if (this.getPosition().adjacent(target.getPosition())) {
@@ -57,25 +56,6 @@ public class OreBlob extends AnimatedEntity {
     }
 
     public Point nextPositionOreBlob(WorldModel world, Point destPos) {
-//        int horiz = Integer.signum(destPos.getX() - this.getPosition().getX());
-//        Point newPos = new Point(this.getPosition().getX() + horiz, this.getPosition().getY());
-//
-//        Optional<Entity> occupant = world.getOccupant(newPos);
-//
-//        if (horiz == 0 || (occupant.isPresent() && !(occupant.get().getClass()
-//                == Ore.class))) {
-//            int vert = Integer.signum(destPos.getY() - this.getPosition().getY());
-//            newPos = new Point(this.getPosition().getX(), this.getPosition().getY() + vert);
-//            occupant = world.getOccupant(newPos);
-//
-//            if (vert == 0 || (occupant.isPresent() && !(occupant.get().getClass()
-//                    == Ore.class))) {
-//                newPos = this.getPosition();
-//            }
-//        }
-//
-//        return newPos;
-
         Point startPos = this.getPosition();
         Predicate<Point> canPassThrough = (Point p) -> (world.withinBounds(p)) && (!(world.isOccupied(p)) || (world.getOccupant(p).isPresent() && (world.getOccupant(p).get().getClass() == Ore.class)));
         BiPredicate<Point, Point> withinReach = (Point p, Point b) -> neighbors(p, b); //within reach is not used
