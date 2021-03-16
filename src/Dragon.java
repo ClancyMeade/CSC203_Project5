@@ -71,6 +71,12 @@ public class Dragon extends AnimatedEntity
         return path.get(0);
     }
 
+    public void decrementLife()
+    {
+        this.lifeCount = this.lifeCount -1;
+    }
+
+
     public boolean neighbors(Point p1, Point p2)
     {
         return p1.getX()+1 == p2.getX() && p1.getY() == p2.getY() ||
