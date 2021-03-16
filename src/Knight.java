@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Knight extends AnimatedEntity{
-
+//comment
     public Knight(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod){
         super(id, position,images, actionPeriod,animationPeriod);
     }
