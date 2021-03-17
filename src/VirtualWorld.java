@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 
 import processing.core.*;
 
@@ -32,8 +34,8 @@ public final class VirtualWorld extends PApplet {
     private static final double FASTER_SCALE = 0.25;
     private static final double FASTEST_SCALE = 0.10;
 
-    private static final int FENCE_ACTION_TIME = 5;
-    private static final int FENCE_ANIMATION_TIME = 6;
+    private static final int KNIGHT_ACTION_TIME = 5;
+    private static final int KNIGHT_ANIMATION_TIME = 6;
 
     private static double timeScale = 1.0;
 
@@ -83,32 +85,46 @@ public final class VirtualWorld extends PApplet {
         //add fence object at points 10 by 10 around this
         int topRightX = pressed.getX() + 5;
         int topRightY = pressed.getY() - 5;
-        for(int i = 0; i < 10; i++){
+        ArrayList<Point> dragonPoints = new ArrayList<>();
+        for(int i = 0; i <= 10; i++){
             Point p1 = new Point(topRightX - i, topRightY);
             Point p2 = new Point(topRightX - i, topRightY + 10);
             Point p3 = new Point(topRightX, topRightY + i);
             Point p4 = new Point(topRightX - 10, topRightY + i);
+            Point[] points = {p1,p2,p3,p4};
+            for(Point p: points ){
+                Fence fence = CreateFactory.createFence("fence", p, this.imageStore.getImageList("fence"));
+                if(world.isOccupied(p)) {
+                    if (world.getOccupant(p).get() instanceof Miner){
+                        dragonPoints.add(p);
+                    }
+                world.removeEntityAt(p);
+                }
+                this.world.tryAddEntity(fence);
+
+            }
             // a fence must be added to each of these points
             //create fence and add to world but idk what class to do that in
-            Fence fence = CreateFactory.createFence("fence1", p1, this.imageStore.getImageList("fence"));
-            if(!world.isOccupied(p1)) {
-                this.world.tryAddEntity(fence);
-            }
-            if(!world.isOccupied(p2)) {
-                fence = CreateFactory.createFence("fence2", p2, this.imageStore.getImageList("fence"));
-                this.world.tryAddEntity(fence);
-            }
-            if(!world.isOccupied(p3)) {
-                fence = CreateFactory.createFence("fence3", p3, this.imageStore.getImageList("fence"));
-                this.world.tryAddEntity(fence);
-            }
-            if(!world.isOccupied(p4)) {
-                fence = CreateFactory.createFence("fence4", p4, this.imageStore.getImageList("fence"));
-                this.world.tryAddEntity(fence);
-            }
-
         }
-        redraw();
+//         now we add our knights and convert dragons
+        Knight knight = CreateFactory.createKnight("Knight1", pressed, this.imageStore.getImageList("knight"), KNIGHT_ACTION_TIME, KNIGHT_ANIMATION_TIME);
+        if(!world.isOccupied(pressed)) {
+            this.world.tryAddEntity(knight);
+        }
+        knight.scheduleAction(scheduler,world,imageStore);
+
+        for(Point np : dragonPoints) {
+            Dragon dragon = CreateFactory.createDragon("dragon", np, this.imageStore.getImageList("dragon"), KNIGHT_ACTION_TIME, KNIGHT_ANIMATION_TIME, 2);
+            if (world.isOccupied(np) &&world.getOccupant(np).get().getClass().equals(Fence.class)){
+                this.world.removeEntityAt(np);
+                this.world.tryAddEntity(dragon);
+                dragon.scheduleAction(scheduler,world,imageStore);
+            }else if(!world.isOccupied(np)){
+                this.world.tryAddEntity(dragon);
+                dragon.scheduleAction(scheduler,world,imageStore);
+            }
+        }
+        //redraw();
 
     }
 

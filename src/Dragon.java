@@ -71,9 +71,17 @@ public class Dragon extends AnimatedEntity
         return path.get(0);
     }
 
-    public void decrementLife()
+    public void decrementLife(WorldModel world, EventScheduler scheduler)
     {
         this.lifeCount = this.lifeCount -1;
+        checkLife(world, scheduler);
+    }
+    private void checkLife(WorldModel world, EventScheduler scheduler){
+        System.out.println("life: " + lifeCount);
+        if (lifeCount <= 0){
+            world.removeEntity(this);
+            scheduler.unscheduleAllEvents(this);
+        }
     }
 
 

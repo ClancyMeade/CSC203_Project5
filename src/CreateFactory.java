@@ -45,6 +45,7 @@ public final class CreateFactory
                 resourceLimit, 0, actionPeriod, animationPeriod);
     }
 
+
     public static Obstacle createObstacle(
             String id, Point position, List<PImage> images) {
         return new Obstacle(id, position, images);

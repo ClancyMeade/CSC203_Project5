@@ -18,10 +18,10 @@ public class Knight extends AnimatedEntity{
         if (dragonTarget.isPresent() && this.moveTo(world, dragonTarget.get(), scheduler)) {
             //this.transformFull(world, scheduler, imageStore);
             // do what we do once we reach dragon
-            if(dragonTarget.getClass().equals(Dragon.class)){
+
                 Dragon  d = (Dragon) dragonTarget.get();
-                d.decrementLife();
-            }
+                d.decrementLife(world, scheduler);
+
             this.die(world, scheduler,imageStore);
         } else {
             scheduler.scheduleEvent(this,
