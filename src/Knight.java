@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Knight extends AnimatedEntity{
-//comment
+
     public Knight(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod){
         super(id, position,images, actionPeriod,animationPeriod);
     }
@@ -18,7 +18,10 @@ public class Knight extends AnimatedEntity{
         if (dragonTarget.isPresent() && this.moveTo(world, dragonTarget.get(), scheduler)) {
             //this.transformFull(world, scheduler, imageStore);
             // do what we do once we reach dragon
-            dragonTarget.hitByKnight(world, scheduler, imageStore);
+            if(dragonTarget.getClass().equals(Dragon.class)){
+                Dragon  d = (Dragon) dragonTarget.get();
+                d.decrementLife();
+            }
             this.die(world, scheduler,imageStore);
         } else {
             scheduler.scheduleEvent(this,

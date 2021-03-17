@@ -90,15 +90,22 @@ public final class VirtualWorld extends PApplet {
             Point p4 = new Point(topRightX - 10, topRightY + i);
             // a fence must be added to each of these points
             //create fence and add to world but idk what class to do that in
-            Fence fence = CreateFactory.createFence("fence1", p1, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
-            this.world.tryAddEntity(fence);
-            fence = CreateFactory.createFence("fence2", p2, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
-            this.world.tryAddEntity(fence);
-            fence = CreateFactory.createFence("fence2", p3, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
-            this.world.tryAddEntity(fence);
-            fence = CreateFactory.createFence("fence2", p4, this.imageStore.getImageList(), FENCE_ACTION_TIME, FENCE_ANIMATION_TIME);
-            this.world.tryAddEntity(fence);
-
+            Fence fence = CreateFactory.createFence("fence1", p1, this.imageStore.getImageList("fence"));
+            if(!world.isOccupied(p1)) {
+                this.world.tryAddEntity(fence);
+            }
+            if(!world.isOccupied(p2)) {
+                fence = CreateFactory.createFence("fence2", p2, this.imageStore.getImageList("fence"));
+                this.world.tryAddEntity(fence);
+            }
+            if(!world.isOccupied(p3)) {
+                fence = CreateFactory.createFence("fence3", p3, this.imageStore.getImageList("fence"));
+                this.world.tryAddEntity(fence);
+            }
+            if(!world.isOccupied(p4)) {
+                fence = CreateFactory.createFence("fence4", p4, this.imageStore.getImageList("fence"));
+                this.world.tryAddEntity(fence);
+            }
 
         }
         redraw();

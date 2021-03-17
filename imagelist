@@ -36,6 +36,12 @@ fire images/fire8.bmp 252 252 252 0
 fire images/fire9.bmp 252 252 252 0
 fire images/fire10.bmp 252 252 252 0
 fence images/fence.bmp 252 252 252 0
+knight images/knight0.bmp 255 255 255 0
+knight images/knight1.bmp 255 255 255 0
+knight images/knight2.bmp 255 255 255 0
+knight images/knight3.bmp 255 255 255 0
+knight images/knight4.bmp 255 255 255 0
+knight images/knight5.bmp 255 255 255 0
 obstacle images/obstacle.bmp
 grass images/grass.bmp
 rocks images/rock.bmp
