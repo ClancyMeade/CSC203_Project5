@@ -18,7 +18,10 @@ public final class CreateFactory
             String id, Point position, List<PImage> images) {
         return new Blacksmith(id, position, images);
     }
-
+    public static Knight createKnight(
+            String id, Point position, List<PImage> images, int actionTime, int animationTime) {
+        return new Knight(id,position,images,actionTime, animationTime);
+    }
     public static MinerFull createMinerFull(
             String id,
             int resourceLimit,
@@ -41,6 +44,7 @@ public final class CreateFactory
         return new MinerNotFull(id, position, images,
                 resourceLimit, 0, actionPeriod, animationPeriod);
     }
+
 
     public static Obstacle createObstacle(
             String id, Point position, List<PImage> images) {
