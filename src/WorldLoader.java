@@ -85,7 +85,7 @@ public final class WorldLoader {
     public static final int DRAGON_LIVES = 3;
     public static final String DRAGON_KEY = "dragon";
 
-    public static final int BARRACK_ACTION_TIME = 6000;
+    public static final int BARRACK_ACTION_TIME = 1000;
     public static final String BARRACK_KEY = "barrack";
 
 
