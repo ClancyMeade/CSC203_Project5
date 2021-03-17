@@ -8,9 +8,11 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Knight extends AnimatedEntity{
-
-    public Knight(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod){
+    //private Barrack barrack;
+    public Knight(String id, Point position, List<PImage> images, int actionPeriod, int animationPeriod){//}, Barrack barrack){
         super(id, position,images, actionPeriod,animationPeriod);
+       // this.barrack = barrack;
+
     }
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> dragonTarget = world.findNearest(this.getPosition(), Dragon.class);

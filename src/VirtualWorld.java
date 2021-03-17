@@ -34,8 +34,7 @@ public final class VirtualWorld extends PApplet {
     private static final double FASTER_SCALE = 0.25;
     private static final double FASTEST_SCALE = 0.10;
 
-    private static final int KNIGHT_ACTION_TIME = 5;
-    private static final int KNIGHT_ANIMATION_TIME = 6;
+
 
     private static double timeScale = 1.0;
 
@@ -81,42 +80,65 @@ public final class VirtualWorld extends PApplet {
     }
     public void mousePressed()
     {
-        Point pressed = mouseToPoint(mouseX, mouseY);
+        Point pressed = mouseToPoint(mouseX, mouseY );
         //add fence object at points 10 by 10 around this
         int topRightX = pressed.getX() + 5;
         int topRightY = pressed.getY() - 5;
         ArrayList<Point> dragonPoints = new ArrayList<>();
-        for(int i = 0; i <= 10; i++){
-            Point p1 = new Point(topRightX - i, topRightY);
-            Point p2 = new Point(topRightX - i, topRightY + 10);
-            Point p3 = new Point(topRightX, topRightY + i);
-            Point p4 = new Point(topRightX - 10, topRightY + i);
-            Point[] points = {p1,p2,p3,p4};
-            for(Point p: points ){
+        for(int i = 1; i < 10; i++) { //draws fences and adds miners on the fence line to dragon list
+            Point p1 = new Point(topRightX - i, topRightY );
+            Point p2 = new Point(topRightX - i, topRightY + 9);
+            Point p3 = new Point(topRightX , topRightY + i);
+            Point p4 = new Point(topRightX - 9, topRightY + i);
+            Point[] points = {p1, p2, p3, p4};
+            for (Point p : points) {            // a fence must be added to each of these points
                 Fence fence = CreateFactory.createFence("fence", p, this.imageStore.getImageList("fence"));
-                if(world.isOccupied(p)) {
-                    if (world.getOccupant(p).get() instanceof Miner){
+                if (world.isOccupied(p)) {
+                    if (world.getOccupant(p).get() instanceof Miner) {
+                        world.removeEntityAt(p);
                         dragonPoints.add(p);
                     }
-                world.removeEntityAt(p);
+                } else {
+                    this.world.tryAddEntity(fence);
                 }
-                this.world.tryAddEntity(fence);
-
             }
-            //comment
-            // a fence must be added to each of these points
-            //create fence and add to world but idk what class to do that in
         }
-//         now we add our knights and convert dragons
-        Knight knight = CreateFactory.createKnight("Knight1", pressed, this.imageStore.getImageList("knight"), KNIGHT_ACTION_TIME, KNIGHT_ANIMATION_TIME);
-        if(!world.isOccupied(pressed)) {
-            this.world.tryAddEntity(knight);
-        }
-        knight.scheduleAction(scheduler,world,imageStore);
+        dragonPoints = findMinersWithinFence(dragonPoints, topRightX, topRightY);
+        drawBarrack(pressed);
+        // need to go throught each spot in 10x10 space and see if there is a minor there
+        drawDragons(dragonPoints);
 
+    }
+    private ArrayList<Point> findMinersWithinFence(ArrayList<Point> dragonPoints, int topRightX, int topRightY) {
+
+        for (int x = topRightX - 1; x >= topRightX - 8; x--){
+            for (int y = topRightY + 1; y <= topRightY + 8; y++){
+                System.out.println("point:" + x + "," + y);
+                Point checkP = new Point(x,y);
+                if(world.isOccupied(checkP) && world.getOccupant(checkP).get() instanceof Miner){
+                    dragonPoints.add(checkP);
+                }
+            }
+        }
+        return dragonPoints;
+    }
+    private void drawBarrack(Point pressed){
+        Barrack barrack = CreateFactory.createBarrack("barrack", pressed, this.imageStore.getImageList(WorldLoader.BARRACK_KEY), WorldLoader.BARRACK_ACTION_TIME);
+        if(world.isOccupied(pressed)) {
+            world.removeEntityAt(pressed);
+        }
+        if(world.isOccupied(new Point(pressed.getX(), pressed.getY() + 1))){
+            world.removeEntityAt(new Point(pressed.getX(), pressed.getY() + 1));
+        }
+        world.tryAddEntity(barrack);
+        barrack.scheduleAction(scheduler,world,imageStore);
+    }
+    private void drawDragons(ArrayList<Point> dragonPoints){
         for(Point np : dragonPoints) {
-            Dragon dragon = CreateFactory.createDragon("dragon", np, this.imageStore.getImageList("dragon"), KNIGHT_ACTION_TIME, KNIGHT_ANIMATION_TIME, 2);
-            if (world.isOccupied(np) &&world.getOccupant(np).get().getClass().equals(Fence.class)){
+            Dragon dragon = CreateFactory.createDragon("dragon", np, this.imageStore.getImageList(WorldLoader.DRAGON_KEY), WorldLoader.DRAGON_ACTION_TIME, WorldLoader.DRAGON_ANIMATION_TIME, WorldLoader.DRAGON_LIVES);
+            //Ore dragon = CreateFactory.createOre("dragon", np,  WorldLoader.DRAGON_ACTION_TIME, this.imageStore.getImageList(WorldLoader.DRAGON_KEY));
+
+            if (world.isOccupied(np) && (world.getOccupant(np).get().getClass().equals(Fence.class) || world.getOccupant(np).get() instanceof Miner)){
                 this.world.removeEntityAt(np);
                 this.world.tryAddEntity(dragon);
                 dragon.scheduleAction(scheduler,world,imageStore);
@@ -125,13 +147,11 @@ public final class VirtualWorld extends PApplet {
                 dragon.scheduleAction(scheduler,world,imageStore);
             }
         }
-        //redraw();
-
     }
 
     private Point mouseToPoint(int x, int y)
     {
-        return new Point(mouseX/TILE_WIDTH, mouseY/TILE_HEIGHT);
+        return new Point(mouseX/TILE_WIDTH +  view.viewport().getCol(), mouseY/TILE_HEIGHT + view.viewport().getRow());
     }
     public void keyPressed() {
         if (key == CODED) {
