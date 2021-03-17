@@ -76,6 +76,20 @@ public final class WorldLoader {
     public static final int FIRE_ACTION_PERIOD = 1200;
     public static final int FIRE_ANIMATION_PERIOD = 90;
 
+    public static final int KNIGHT_ACTION_TIME = 5;
+    public static final int KNIGHT_ANIMATION_TIME = 6;
+    public static final String KNIGHT_KEY = "knight";
+
+    public static final int DRAGON_ACTION_TIME = 6;
+    public static final int DRAGON_ANIMATION_TIME = 7;
+    public static final int DRAGON_LIVES = 3;
+    public static final String DRAGON_KEY = "dragon";
+
+    public static final int BARRACK_ACTION_TIME = 1000;
+    public static final String BARRACK_KEY = "barrack";
+
+//
+
     public static boolean parseBackground(
             String[] properties, WorldModel world, ImageStore imageStore) {
         if (properties.length == BGND_NUM_PROPERTIES) {

@@ -63,6 +63,7 @@ public final class WorldView {
 
         this.viewport.shift(newCol, newRow);
     }
+    public Viewport viewport(){return this.viewport;}
 
 
 }
