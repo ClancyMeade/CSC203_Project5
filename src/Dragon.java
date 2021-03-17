@@ -17,7 +17,9 @@ public class Dragon extends AnimatedEntity
 
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> dragonTarget = world.findNearest(this.getPosition(), Fence.class);
-
+//        if(dragonTarget.isEmpty()){
+//            dragonTarget = world.findNearest(this.getPosition(), Blacksmith.class);
+//        } this would make dragon go after blacksmiths
         if (dragonTarget.isPresent()) {
             Point tgtPos = dragonTarget.get().getPosition();
 
