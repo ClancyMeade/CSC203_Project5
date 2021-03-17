@@ -73,7 +73,7 @@ public final class WorldLoader {
 
     public static final String FIRE_KEY = "fire";
     public static final String FIRE_ID = "fire";
-    public static final int FIRE_ACTION_PERIOD = 1100;
+    public static final int FIRE_ACTION_PERIOD = 1200;
     public static final int FIRE_ANIMATION_PERIOD = 90;
 
     public static boolean parseBackground(
