@@ -85,5 +85,8 @@ public final class CreateFactory
         return new Fence(id, position, images);
     }
 
-
+    public static Fire createFire(Point position, List<PImage> images)
+    {
+        return new Fire(WorldLoader.FIRE_ID, position, images, WorldLoader.FIRE_ACTION_PERIOD, WorldLoader.FIRE_ANIMATION_PERIOD);
+    }
 }

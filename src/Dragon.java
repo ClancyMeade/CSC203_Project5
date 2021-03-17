@@ -17,24 +17,21 @@ public class Dragon extends AnimatedEntity
 
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> dragonTarget = world.findNearest(this.getPosition(), Fence.class);
-//        if(dragonTarget.isEmpty()){
-//            dragonTarget = world.findNearest(this.getPosition(), Blacksmith.class);
-//        } this would make dragon go after blacksmiths
+        long nextPeriod = this.getActionPeriod();
+
         if (dragonTarget.isPresent()) {
             Point tgtPos = dragonTarget.get().getPosition();
 
             if (this.moveTo(world, dragonTarget.get(), scheduler))
             {
-                //Do whatever happens when dragon encounters fence
-                //Maybe create new entity fire that occurs after the fence is destroyed (like quake):
+                ActiveEntity fire = CreateFactory.createFire(tgtPos, imageStore.getImageList(WorldLoader.FIRE_KEY));
 
-                //ActiveEntity fire = CreateFactory.createFire(tgtPos, imageStore.getImageList(WorldLoader.FIRE_KEY));
-                //world.addEntity(fire);
-                //nextPeriod += this.getActionPeriod();
-                //fire.scheduleAction(scheduler, world, imageStore);
+                world.addEntity(fire);
+                nextPeriod += this.getActionPeriod();
+                fire.scheduleAction(scheduler, world, imageStore);
             }
         }
-        scheduler.scheduleEvent(this, CreateFactory.createActivityAction(this, world, imageStore), this.getActionPeriod());
+        scheduler.scheduleEvent(this, CreateFactory.createActivityAction(this, world, imageStore), nextPeriod);
     }
 
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
