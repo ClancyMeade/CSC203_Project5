@@ -71,6 +71,11 @@ public final class WorldLoader {
     public static final int VEIN_ROW = 3;
     public static final int VEIN_ACTION_PERIOD = 4;
 
+    public static final String FIRE_KEY = "fire";
+    public static final String FIRE_ID = "fire";
+    public static final int FIRE_ACTION_PERIOD = 1100;
+    public static final int FIRE_ANIMATION_PERIOD = 90;
+
     public static boolean parseBackground(
             String[] properties, WorldModel world, ImageStore imageStore) {
         if (properties.length == BGND_NUM_PROPERTIES) {
