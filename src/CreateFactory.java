@@ -18,10 +18,15 @@ public final class CreateFactory
             String id, Point position, List<PImage> images) {
         return new Blacksmith(id, position, images);
     }
+    public static Barrack createBarrack(
+            String id, Point position, List<PImage> images, int actionPeriod) {
+        return new Barrack(id, position, images, actionPeriod);
+    }
     public static Knight createKnight(
             String id, Point position, List<PImage> images, int actionTime, int animationTime) {
         return new Knight(id,position,images,actionTime, animationTime);
     }
+
     public static MinerFull createMinerFull(
             String id,
             int resourceLimit,

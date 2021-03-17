@@ -34,8 +34,7 @@ public final class VirtualWorld extends PApplet {
     private static final double FASTER_SCALE = 0.25;
     private static final double FASTEST_SCALE = 0.10;
 
-    private static final int KNIGHT_ACTION_TIME = 5;
-    private static final int KNIGHT_ANIMATION_TIME = 6;
+
 
     private static double timeScale = 1.0;
 
@@ -96,26 +95,32 @@ public final class VirtualWorld extends PApplet {
                 Fence fence = CreateFactory.createFence("fence", p, this.imageStore.getImageList("fence"));
                 if(world.isOccupied(p)) {
                     if (world.getOccupant(p).get() instanceof Miner){
+                        world.removeEntityAt(p);
                         dragonPoints.add(p);
                     }
-                world.removeEntityAt(p);
+                }else {
+                    this.world.tryAddEntity(fence);
                 }
-                this.world.tryAddEntity(fence);
-
             }
             //comment
             // a fence must be added to each of these points
             //create fence and add to world but idk what class to do that in
         }
 //         now we add our knights and convert dragons
-        Knight knight = CreateFactory.createKnight("Knight1", pressed, this.imageStore.getImageList("knight"), KNIGHT_ACTION_TIME, KNIGHT_ANIMATION_TIME);
-        if(!world.isOccupied(pressed)) {
-            this.world.tryAddEntity(knight);
+
+
+        Barrack barrack = CreateFactory.createBarrack("barrack", pressed, this.imageStore.getImageList(WorldLoader.BARRACK_KEY), WorldLoader.BARRACK_ACTION_TIME);
+        if(world.isOccupied(pressed)) {
+            world.removeEntityAt(pressed);
         }
-        knight.scheduleAction(scheduler,world,imageStore);
+        if(world.isOccupied(new Point(pressed.getX(), pressed.getY() + 1))){
+            world.removeEntityAt(new Point(pressed.getX(), pressed.getY() + 1));
+        }
+        world.tryAddEntity(barrack);
+        barrack.scheduleAction(scheduler,world,imageStore);
 
         for(Point np : dragonPoints) {
-            Dragon dragon = CreateFactory.createDragon("dragon", np, this.imageStore.getImageList("dragon"), KNIGHT_ACTION_TIME, KNIGHT_ANIMATION_TIME, 2);
+            Dragon dragon = CreateFactory.createDragon("dragon", np, this.imageStore.getImageList(WorldLoader.DRAGON_KEY), WorldLoader.DRAGON_ACTION_TIME, WorldLoader.DRAGON_ANIMATION_TIME, 2);
             if (world.isOccupied(np) &&world.getOccupant(np).get().getClass().equals(Fence.class)){
                 this.world.removeEntityAt(np);
                 this.world.tryAddEntity(dragon);
