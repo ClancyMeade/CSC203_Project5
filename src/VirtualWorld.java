@@ -103,6 +103,7 @@ public final class VirtualWorld extends PApplet {
                 this.world.tryAddEntity(fence);
 
             }
+            //comment
             // a fence must be added to each of these points
             //create fence and add to world but idk what class to do that in
         }
