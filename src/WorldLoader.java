@@ -73,7 +73,7 @@ public final class WorldLoader {
 
     public static final String FIRE_KEY = "fire";
     public static final String FIRE_ID = "fire";
-    public static final int FIRE_ACTION_PERIOD = 1200;
+    public static final int FIRE_ACTION_PERIOD = 1300;
     public static final int FIRE_ANIMATION_PERIOD = 90;
 
     public static final int KNIGHT_ACTION_TIME = 5;
@@ -85,7 +85,7 @@ public final class WorldLoader {
     public static final int DRAGON_LIVES = 3;
     public static final String DRAGON_KEY = "dragon";
 
-    public static final int BARRACK_ACTION_TIME = 1000;
+    public static final int BARRACK_ACTION_TIME = 2700;
     public static final String BARRACK_KEY = "barrack";
 
 //
