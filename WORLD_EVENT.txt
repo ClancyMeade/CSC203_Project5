@@ -1,3 +1,5 @@
+*The code can be found on Clancy's github repo
+
 1. How to trigger event
 - To trigger the event, click the mouse somewhere on the screen
 2. What happens when event is triggered
@@ -20,9 +22,10 @@ Clancy:
 - Fire Entity
 - Dragon Entity
 - Fence Entity
-
 Dane
 - Event click
 - Barracks Entity
 - Knight Entity
+
+
 
